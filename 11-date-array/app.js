@@ -7,11 +7,17 @@ function isDate(str) {
     const parts = str.split(divider);
     if (parts.length !== 3) return false;
 
-    const [day, month, year] = [...parts];
+    let [day, month, year] = [...parts];
+    if (divider === '/') {
+        const t = day;
+        day = month;
+        month = t;
+    }
+
     if (isNaN(day) || isNaN(month) || isNaN(year)) return false;
 
-    if (Number(day) > 31) return false;
-    if (Number(month) > 12) return false;
+    if (Number(day) < 1 || Number(day) > 31) return false;
+    if (Number(month) < 1 || Number(month) > 12) return false;
 
     return true;
 }
