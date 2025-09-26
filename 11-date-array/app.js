@@ -25,6 +25,12 @@ function isDate(str) {
 function getDate(str) {
     const divider = getDivider(str);
     const parts = str.split(divider);
+    if (divider === '/') {
+        const t = parts[0];
+        parts[0] = parts[1];
+        parts[1] = t;
+    }
+
     return parts.join('-');
 }
 
