@@ -1,0 +1,48 @@
+const DIVIDER = '-';
+
+function isDate(str) {
+    const divider = getDivider(str);
+    if (!divider) return false;
+
+    const parts = str.split(divider);
+    if (parts.length !== 3) return false;
+
+    let [day, month, year] = [...parts];
+    if (divider === '/') {
+        const t = day;
+        day = month;
+        month = t;
+    }
+
+    if (isNaN(day) || isNaN(month) || isNaN(year)) return false;
+
+    if (Number(day) < 1 || Number(day) > 31) return false;
+    if (Number(month) < 1 || Number(month) > 12) return false;
+
+    return true;
+}
+
+function getDate(str) {
+    const divider = getDivider(str);
+    const parts = str.split(divider);
+    if (divider === '/') {
+        const t = parts[0];
+        parts[0] = parts[1];
+        parts[1] = t;
+    }
+
+    return parts.join('-');
+}
+
+function getDivider(str) {
+    if (str.includes('-')) {
+        return '-';
+    } else if (str.includes('/')) {
+        return '/';
+    }
+    return null;
+}
+
+const arr= ['10-02-2022', 'тест', '11/12/2023', '00/13/2022', '41/12/2023'];
+const dates = arr.filter(el => isDate(el)).map(el => getDate(el));
+console.log(dates);
